@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --neon-primary: #ff2a6d;
+  --neon-light: #ff6b9d;
+  --neon-dim: #7a0a2a;
+  --neon-glow: rgba(255, 42, 109, 0.55);
+  --neon-glow-soft: rgba(255, 42, 109, 0.25);
+  --neon-glow-faint: rgba(255, 42, 109, 0.18);
+  --neon-border: rgba(255, 42, 109, 0.45);
+  --neon-border-soft: rgba(255, 42, 109, 0.22);
+  --neon-bg-tint: rgba(255, 42, 109, 0.12);
+  --neon-chat-own: rgba(255, 42, 109, 0.28);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: radial-gradient(1200px 800px at 20% -10%, var(--neon-bg-tint), transparent),
+    radial-gradient(900px 600px at 100% 20%, color-mix(in srgb, var(--neon-dim) 35%, transparent), transparent),
+    #09090b;
+}
+
+@keyframes float-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.35);
+  }
+}
+
+@keyframes typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-3px);
+  }
+}
+
+.reaction-float {
+  animation: float-up 2.2s ease-out forwards;
+  filter: drop-shadow(0 0 8px var(--neon-glow));
+}
+
+.glass {
+  background: rgba(9, 9, 11, 0.72);
+  border: 1px solid var(--neon-border-soft);
+  box-shadow: 0 0 24px var(--neon-glow-faint);
+  backdrop-filter: blur(10px);
+}
+
+.neon-border {
+  border-color: var(--neon-border);
+  box-shadow: 0 0 16px var(--neon-glow-soft), inset 0 0 20px var(--neon-glow-faint);
+}
+
+.shadow-neon {
+  box-shadow: 0 0 12px var(--neon-glow), 0 0 28px var(--neon-glow-soft);
+}
+
+.shadow-neon-sm {
+  box-shadow: 0 0 8px var(--neon-glow-soft);
+}
+
+.text-neon-red {
+  color: var(--neon-primary);
+}
+
+.text-neon-pink {
+  color: var(--neon-light);
+}
+
+.border-neon-red {
+  border-color: var(--neon-primary);
+}
+
+.border-neon-dim {
+  border-color: var(--neon-dim);
+}
+
+.bg-neon-red {
+  background-color: var(--neon-primary);
+}
+
+.focus-neon:focus {
+  border-color: var(--neon-primary);
+  box-shadow: 0 0 8px var(--neon-glow-soft);
+}
+
+.chat-bubble-own {
+  background: var(--neon-chat-own);
+  border: 1px solid var(--neon-border-soft);
+}
+
+.chat-bubble-other {
+  background: rgba(39, 39, 42, 0.9);
+  border: 1px solid rgba(63, 63, 70, 0.8);
+}
+
+.typing-dot {
+  animation: typing-bounce 1.2s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}
