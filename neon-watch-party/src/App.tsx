@@ -277,7 +277,7 @@ export default function App() {
     const t = estimatedPlaybackTime(p);
     if (p.type === "upload" && p.src && videoRef.current) {
       const v = videoRef.current;
-      if (Math.abs(v.currentTime - t) > 1.5) v.currentTime = t;
+      if (Math.abs(v.currentTime - t) > 0.5) v.currentTime = t;
       if (p.playing) void v.play().catch(() => {});
       else v.pause();
     }
@@ -314,7 +314,7 @@ export default function App() {
         { ...playbackRef.current, t, playing },
         () => {},
       );
-    }, 2500);
+    }, 400);
     return () => {
       if (hostSyncTimerRef.current) window.clearInterval(hostSyncTimerRef.current);
     };
