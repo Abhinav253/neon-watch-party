@@ -384,7 +384,6 @@ export default function App() {
     const timer = window.setTimeout(() => {
       if (playbackRef.current.type !== "youtube" || playbackRef.current.videoId !== vid) return;
       if (!ytContainerRef.current) return;
-      destroyYt();
       ytPlayerRef.current = new window.YT!.Player(ytContainerRef.current, {
         videoId: vid,
         width: "100%",
