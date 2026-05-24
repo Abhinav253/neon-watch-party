@@ -107,10 +107,10 @@ export default function App() {
   hostIsMeRef.current = hostIsMe;
 
   useEffect(() => {
-    const s = io({
-      path: "/socket.io",
-      transports: ["websocket", "polling"],
-    });
+    const s = io("https://neon-watch-party.onrender.com", {
+  path: "/socket.io",
+  transports: ["websocket", "polling"],
+});
     socketRef.current = s;
     s.on("connect", () => {
       setConnected(true);
