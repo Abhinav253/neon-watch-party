@@ -296,8 +296,10 @@ export default function App() {
   useEffect(() => {
     if (!hostIsMe) return;
     if (playback.type === "none") return;
-    if (hostSyncTimerRef.current) window.clearInterval(hostSyncTimerRef.current);
-    hostSyncTimerRef.current = window.setInterval(() => {
+    if (hostSyncTimerRef.current)
+  window.clearInterval(hostSyncTimerRef.current);
+    if (mediaType !== "youtube") {
+  hostSyncTimerRef.current = window.setInterval(() => {
       const s = socketRef.current;
       if (!s || !hostIsMe) return;
       let t = 0;
