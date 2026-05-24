@@ -382,18 +382,33 @@ export default function App() {
             applyPlaybackToMedia(playbackRef.current, hostIsMeRef.current);
           },
           onStateChange: (e: { data: number }) => {
-            if (!hostIsMeRef.current) return;
-            const sk = socketRef.current;
-            if (!sk) return;
-            const pl = ytPlayerRef.current;
-            if (!pl?.getCurrentTime) return;
-            const playing = e.data === 1;
-            const t = pl.getCurrentTime() || 0;
-            sk.emit("playback:set", { type: "youtube", videoId: vid, src: null, t, playing, updatedAt: Date.now() }, () => {});
-          },
-        },
-      });
-    }, 0);
+  if (!hostIsMeRef.current) return;
+
+  // only PLAY and PAUSE
+  if (e.data !== 1 && e.data !== 2) return;
+
+  const sk = socketRef.current;
+  if (!sk) return;
+
+  const pl = ytPlayerRef.current;
+  if (!pl?.getCurrentTime) return;
+
+  const playing = e.data === 1;
+  const t = pl.getCurrentTime() || 0;
+
+  sk.emit(
+    "playback:set",
+    {
+      type: "youtube",
+      videoId: vid,
+      src: null,
+      t,
+      playing,
+      updatedAt: Date.now(),
+    },
+    () => {}
+  );
+},
     return () => {
       window.clearTimeout(timer);
       destroyYt();
