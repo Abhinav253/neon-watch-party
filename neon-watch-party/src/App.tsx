@@ -218,14 +218,32 @@ export default function App() {
     const socket = socketRef.current;
     if (!socket) return;
     const onSync = (p: Playback) => {
-      if (socket.id === hostId) return;
-      applyPlaybackToMedia(p, false);
-    };
-    socket.on("playback:sync", onSync);
-    return () => {
-      socket.off("playback:sync", onSync);
-    };
-  }, [hostId]);
+  if (socket.id === hostId) return;
+
+  // for youtube only sync play/pause state
+  if (p.type === "youtube") {
+    const pl = ytPlayerRef.current;
+
+    if (!pl) return;
+
+    try {
+      const state = pl.getPlayerState?.();
+
+      if (p.playing && state !== 1) {
+        pl.playVideo?.();
+      } else if (!p.playing && state === 1) {
+        pl.pauseVideo?.();
+      }
+
+    } catch {
+      /* ignore */
+    }
+
+    return;
+  }
+
+  applyPlaybackToMedia(p, false);
+};
 
   const myDisplayName = useMemo(() => {
     const me = members.find((m) => m.socketId === mySocketId);
