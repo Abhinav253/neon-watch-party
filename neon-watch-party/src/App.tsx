@@ -283,15 +283,29 @@ export default function App() {
       else v.pause();
     }
     if (p.type === "youtube" && p.videoId && ytPlayerRef.current && typeof ytPlayerRef.current.seekTo === "function") {
-      const pl = ytPlayerRef.current;
-      try {
-        pl.seekTo?.(t, true);
-        if (p.playing) pl.playVideo?.();
-        else pl.pauseVideo?.();
-      } catch {
-        /* ignore */
-      }
+  const pl = ytPlayerRef.current;
+
+  try {
+    const current = pl.getCurrentTime?.() || 0;
+
+    // only correct BIG desyncs
+    if (Math.abs(current - t) > 5) {
+      pl.seekTo?.(t, true);
     }
+
+    const state = pl.getPlayerState?.();
+
+    // sync play/pause only
+    if (p.playing && state !== 1) {
+      pl.playVideo?.();
+    } else if (!p.playing && state === 1) {
+      pl.pauseVideo?.();
+    }
+
+  } catch {
+    /* ignore */
+  }
+}
   }, []);
 
   useEffect(() => {
