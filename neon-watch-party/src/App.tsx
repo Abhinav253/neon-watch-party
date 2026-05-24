@@ -313,7 +313,7 @@ export default function App() {
     if (playback.type === "none") return;
     if (hostSyncTimerRef.current)
   window.clearInterval(hostSyncTimerRef.current);
-    if (mediaType !== "youtube") {
+    if (playback.type !== "youtube") {
   hostSyncTimerRef.current = window.setInterval(() => {
       const s = socketRef.current;
       if (!s || !hostIsMe) return;
