@@ -564,7 +564,13 @@ export default function App() {
     if (!roomCode) throw new Error("No room");
     const fd = new FormData();
     fd.append("file", file);
-    const res = await fetch(`/api/upload?room=${encodeURIComponent(roomCode)}`, { method: "POST", body: fd });
+    const res = await fetch(
+  `https://neon-watch-party.onrender.com/api/upload?room=${encodeURIComponent(roomCode)}`,
+  {
+    method: "POST",
+    body: fd,
+  }
+);
     const j = await res.json();
     if (!res.ok) throw new Error(j.error || "Upload failed");
     return { url: j.url as string, name: (j.name as string) || file.name };
@@ -599,7 +605,9 @@ export default function App() {
     setSearching(true);
     setSearchHits([]);
     try {
-      const res = await fetch(`/api/youtube/search?q=${encodeURIComponent(q)}`);
+      const res = await fetch(
+  `https://neon-watch-party.onrender.com/api/youtube/search?q=${encodeURIComponent(q)}`
+);
       const j = await res.json();
       setSearchHits(j.items || []);
     } catch {
