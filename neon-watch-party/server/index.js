@@ -173,7 +173,7 @@ app.post("/api/upload", (req, res) => {
       res.status(400).json({ error: "No file" });
       return;
     }
-    const url = `/uploads/${req.file.filename}`;
+    const url = `https://neon-watch-party.onrender.com/uploads/${req.file.filename}`;
     res.json({ url, name: req.file.originalname, filename: req.file.filename });
   });
 });
