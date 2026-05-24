@@ -277,7 +277,8 @@ export default function App() {
     const t = estimatedPlaybackTime(p);
     if (p.type === "upload" && p.src && videoRef.current) {
       const v = videoRef.current;
-      if (Math.abs(v.currentTime - t) > 1.2) v.currentTime = t;
+      if (playback.type === "upload" && Math.abs(v.currentTime - t) > 1.2)
+  v.currentTime = t;
       if (p.playing) void v.play().catch(() => {});
       else v.pause();
     }
